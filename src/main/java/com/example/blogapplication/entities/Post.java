@@ -36,7 +36,6 @@ public class Post {
     @JoinColumn(name = "author_id",  nullable = false)
     private User author;
 
-    @NotNull
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime  createdAt;
