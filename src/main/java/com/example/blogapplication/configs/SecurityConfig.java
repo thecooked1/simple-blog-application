@@ -1,5 +1,6 @@
 package com.example.blogapplication.configs;
 
+import com.example.blogapplication.services.SecurityService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,9 +12,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private final SecurityService securityService;
+
+    public SecurityConfig(SecurityService securityService) {
+        this.securityService = securityService;
+    }
 
     @Bean
-    public SecurityFilterChain SecurityFilter(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.
                         requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/login/**").permitAll()
@@ -29,7 +35,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder PasswordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
