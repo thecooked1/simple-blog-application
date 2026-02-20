@@ -37,10 +37,6 @@ public class AuthController {
 
         return "redirect:/login?success";
     }
-    @GetMapping("/")
-    public String index(Model model) {
-        return "index";
-    }
 
     @GetMapping("/login")
     public String login() {

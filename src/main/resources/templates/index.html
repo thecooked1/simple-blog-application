@@ -9,7 +9,28 @@
 <div sec:authorize="isAuthenticated()">
     <h1>Login successful</h1>
     <p>Welcome <span sec:authentication="name">User</span></p>
+    <a href="/posts/new"><strong>+ Create New Post</strong></a>
+    <br><br>
 </div>
+
+<h2>Latest Posts</h2>
+<div th:each="post : ${posts}">
+    <h3 th:text="${post.title}">Post Title</h3>
+
+    <p>
+        By <strong th:text="${post.author.username}">Author</strong>
+        on <span th:text="${post.createdAt}">Date</span>
+    </p>
+
+    <p th:text="${post.content}">Post content goes here...</p>
+    <hr>
+</div>
+
+
+<div th:if="${posts.isEmpty()}">
+    <p>No posts yet. Be the first to write one!</p>
+</div>
+
 
 <form th:action="@{/logout}" method="post">
     <button type="submit">Logout</button>
