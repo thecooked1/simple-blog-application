@@ -1,6 +1,6 @@
 package com.example.blogapplication.services.impl;
 
-import com.example.blogapplication.dto.UserRegistration;
+import com.example.blogapplication.dto.UserRegistrationDto;
 import com.example.blogapplication.entities.User;
 import com.example.blogapplication.repositories.UserRepository;
 import com.example.blogapplication.services.UserService;
@@ -18,11 +18,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(UserRegistration userRegistration) {
+    public void addUser(UserRegistrationDto userRegistrationDto) {
         User user = new User();
-        user.setUsername(userRegistration.getUserName());
-        user.setEmail(userRegistration.getEmail());
-        user.setPassword(passwordEncoder.encode(userRegistration.getPassword()));
+        user.setUsername(userRegistrationDto.getUserName());
+        user.setEmail(userRegistrationDto.getEmail());
+        user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
         user.setEnabled(true);
 
         System.out.println("------------------------------------------------");

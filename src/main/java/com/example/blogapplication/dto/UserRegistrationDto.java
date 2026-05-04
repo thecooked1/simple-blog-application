@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRegistration {
+public class UserRegistrationDto {
     @NotEmpty(message = "Username is required")
     private String userName;
 

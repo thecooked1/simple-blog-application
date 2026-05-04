@@ -1,11 +1,13 @@
 package com.example.blogapplication.controllers;
 
-import com.example.blogapplication.dto.UserRegistration;
-import com.example.blogapplication.entities.User;
+import com.example.blogapplication.dto.UserRegistrationDto;
 import com.example.blogapplication.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -18,22 +20,25 @@ public class AuthController {
 
     @GetMapping("/register")
     public String register(Model model) {
-        UserRegistration user = new UserRegistration();
+        UserRegistrationDto user = new UserRegistrationDto();
         model.addAttribute("user", user);
         return "register";
     }
 
     @PostMapping("/register")
-    public String registration(User user, Model model, UserRegistration userRegistration) {
-        if(userService.findUserByEmail(userRegistration.getEmail()) != null){
+    public String registration(@Valid @ModelAttribute("user") UserRegistrationDto userRegistrationDto,
+                               BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "register";
+        }
+        if (userService.findUserByEmail(userRegistrationDto.getEmail()) != null) {
+            return "register";
+        }
+        if (userService.findUserByUsername(userRegistrationDto.getUserName()) != null) {
             return "register";
         }
 
-        if(userService.findUserByUsername(userRegistration.getUserName()) != null){
-            return "register";
-        }
-
-        userService.addUser(userRegistration);
+        userService.addUser(userRegistrationDto);
 
         return "redirect:/login?success";
     }
