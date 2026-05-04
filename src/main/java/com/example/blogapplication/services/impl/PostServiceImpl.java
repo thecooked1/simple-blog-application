@@ -47,4 +47,10 @@ public class PostServiceImpl implements PostService {
         return postRepository.findByAuthorEmail(email);
     }
 
+    @Override
+    public Post findPostById(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
+    }
+
 }

@@ -11,5 +11,6 @@ public interface PostService {
     List<Post> findAllPosts();
     List<Post> findPostsByAuthor(User user);
     List<Post> findPostsByAuthorEmail(String email);
+    Post findPostById(Long id);
 
 }
